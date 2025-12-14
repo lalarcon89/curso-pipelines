@@ -1,19 +1,22 @@
-name: Hola Mundo Pipeline
+name: Integracion Continua Python
 
-# 1. El Trigger (Gatillo)
-# Esto le dice a GitHub: "Ejecútate cada vez que alguien haga push"
 on: [push]
 
-# 2. Los Jobs (Trabajos)
 jobs:
-  saludo-job:
-    # Definimos la máquina virtual donde correrá esto (Linux)
+  test-job:
     runs-on: ubuntu-latest
     
-    # 3. Los Steps (Pasos)
     steps:
-      - name: Paso 1 - Saludar
-        run: echo "¡Hola Leandro! Este es tu primer pipeline corriendo."
-        
-      - name: Paso 2 - Mostrar archivos
-        run: ls -la
+      # 1. Este paso descarga tu código del repositorio al Runner
+      - name: Descargar código (Checkout)
+        uses: actions/checkout@v4
+
+      # 2. Preparamos el entorno de Python
+      - name: Instalar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+          
+      # 3. Intentamos correr el script. Si el script está mal, este paso fallará.
+      - name: Ejecutar Script
+        run: python app.py
