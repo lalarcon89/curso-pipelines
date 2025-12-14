@@ -1,22 +1,26 @@
-name: Integracion Continua Python
+name: Integracion y Entrega Continua
 
 on: [push]
 
 jobs:
-  test-job:
+  build-y-test:
     runs-on: ubuntu-latest
     
     steps:
-      # 1. Este paso descarga tu código del repositorio al Runner
-      - name: Descargar código (Checkout)
+      - name: Descargar código
         uses: actions/checkout@v4
 
-      # 2. Preparamos el entorno de Python
       - name: Instalar Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.10'
           
-      # 3. Intentamos correr el script. Si el script está mal, este paso fallará.
-      - name: Ejecutar Script
+      - name: Ejecutar Tests
         run: python app.py
+
+      # --- NUEVO PASO ---
+      - name: Guardar Artefacto (Upload)
+        uses: actions/upload-artifact@v4
+        with:
+          name: aplicacion-lista-para-usar
+          path: app.py
