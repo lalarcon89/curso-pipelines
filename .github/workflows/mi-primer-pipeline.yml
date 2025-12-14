@@ -1,26 +1,24 @@
-name: Integracion y Entrega Continua
+name: Pipeline Docker CI
 
 on: [push]
 
 jobs:
-  build-y-test:
+  build-docker:
     runs-on: ubuntu-latest
     
     steps:
       - name: Descargar código
         uses: actions/checkout@v4
 
-      - name: Instalar Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.10'
-          
-      - name: Ejecutar Tests
-        run: python app.py
+      # No necesitamos instalar Python aquí, ¡porque Python va DENTRO de Docker!
+      # Pero el runner de GitHub ya trae Docker instalado por defecto.
 
-      # --- NUEVO PASO ---
-      - name: Guardar Artefacto (Upload)
-        uses: actions/upload-artifact@v4
-        with:
-          name: aplicacion-lista-para-usar
-          path: app.py
+      - name: Construir imagen Docker
+        run: docker build -t mi-app-python:v1 .
+        
+      - name: Verificar que la imagen existe
+        run: docker images
+        
+      - name: Prueba rápida del contenedor
+        # Esto arranca el contenedor para ver si imprime el "Hola Mundo"
+        run: docker run mi-app-python:v1
