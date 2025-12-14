@@ -1,5 +1,5 @@
 def saludo():
-    print("Hola mundo")  # <--- ¡Falta el paréntesis de cierre!
+    print("Hola mundo")  
 
 if __name__ == "__main__":
     saludo()
