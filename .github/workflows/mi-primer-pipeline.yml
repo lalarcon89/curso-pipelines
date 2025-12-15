@@ -1,6 +1,6 @@
 name: Pipeline Docker CI
 
-on: [push]
+on: workflow_dispatch
 
 jobs:
   build-docker:
