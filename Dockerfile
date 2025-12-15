@@ -1,11 +1,9 @@
-# 1. Usamos una imagen base de Linux super ligera con Python ya instalado
 FROM python:3.10-slim
 
-# 2. Creamos una carpeta de trabajo dentro del contenedor
+# ESTA ES LA LINEA MAGICA
+# Reemplaza 'TU_USUARIO' por tu nombre de usuario real de GitHub
+LABEL org.opencontainers.image.source=https://github.com/TU_USUARIO/curso-pipelines
+
 WORKDIR /app
-
-# 3. Copiamos tu archivo app.py desde GitHub hacia adentro del contenedor
 COPY app.py .
-
-# 4. El comando que se ejecutará cuando alguien arranque el contenedor
 CMD ["python", "app.py"]
